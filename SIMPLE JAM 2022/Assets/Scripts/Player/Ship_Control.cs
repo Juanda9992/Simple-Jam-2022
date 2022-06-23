@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Ship_Control : MonoBehaviour
 {   
+    public delegate void onPackageDelivered();
+    public static onPackageDelivered onDelivered;
     private Rigidbody rb;
     private bool clicked = false;
 
@@ -73,8 +76,15 @@ public class Ship_Control : MonoBehaviour
         {
             nextRotation.y += xSensitivity;
         }
+        nextRotation.x = Mathf.Clamp(nextRotation.x,-60,60);
+        transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.Euler(nextRotation),5);
 
-        transform.rotation = Quaternion.Euler(nextRotation);
-
+    }
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Package"))
+        {
+            onDelivered?.Invoke();
+        }
     }
 }

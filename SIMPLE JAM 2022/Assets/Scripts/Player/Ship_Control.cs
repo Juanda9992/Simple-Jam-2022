@@ -10,6 +10,8 @@ public class Ship_Control : MonoBehaviour
     [SerializeField]
     private float maxSpeed = 10;
     [SerializeField]
+    private float xSensitivity,ySensitivity;
+
     Vector3 nextRotation;
     // Start is called before the first frame update
     void Start()
@@ -57,21 +59,19 @@ public class Ship_Control : MonoBehaviour
     {
         if(Input.GetKey(KeyCode.W))
         {
-            nextRotation.x += 2;
+            nextRotation.x += xSensitivity;
         }
         else if(Input.GetKey(KeyCode.S))
         {
-            nextRotation.x -= 2;
+            nextRotation.x -= xSensitivity;
         }
         else if(Input.GetKey(KeyCode.A))
         {
-            nextRotation.y -= 2;
-            nextRotation.z = -45;
+            nextRotation.y -= xSensitivity;
         }
         else if(Input.GetKey(KeyCode.D))
         {
-            nextRotation.y += 2;
-            nextRotation.z = 45;
+            nextRotation.y += xSensitivity;
         }
 
         transform.rotation = Quaternion.Euler(nextRotation);
